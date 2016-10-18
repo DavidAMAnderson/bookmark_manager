@@ -10,8 +10,7 @@ feature 'adding tags to new links' do
 
     expect(current_path).to eq '/links'
 
-    within 'ul#links' do
-      expect(page).to have_content 'Shopping'
-    end
+    link = Link.first
+    expect(link.tags.map(&:name)).to include('Shopping')
   end
 end
