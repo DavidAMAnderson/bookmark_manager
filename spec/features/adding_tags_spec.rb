@@ -14,3 +14,18 @@ feature 'adding tags to new links' do
     expect(link.tags.map(&:name)).to include('Shopping')
   end
 end
+
+feature 'adding multiple tags to a link' do
+  scenario 'adding multiple tags within the add link form' do
+    visit '/links/new'
+    fill_in('title', with: 'Amazon')
+    fill_in('url', with: 'http://amazon.co.uk')
+    fill_in('tags', with: 'Shopping, Books')
+    click_button 'Add Bookmark'
+
+    expect(current_path).to eq '/links'
+
+    link = Link.first
+    expect(link.tags.map(&:name)).to include('Shopping', 'Books')
+  end
+end
